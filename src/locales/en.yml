@@ -214,7 +214,7 @@ reconnectingWebUI: Error connecting, reconnecting...
 log: log
 managerServerNotConfig: managerServer is not configured!
 managerServerSecretNotSet: The secret of managerServer is not set!
-managerServerStart: managerServer started successfully! Push link %s
+managerServerStart: managerServer started successfully! Web link %s
 cookieUpdated: Cookie updated successfully, source IP %s
 twitchCookieUpdated: Twitch cookie updated successfully, source IP %s
 publicNetworkNotice: If you need public network access, please replace 127.0.0.1 with

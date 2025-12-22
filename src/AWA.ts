@@ -1297,14 +1297,27 @@ class AWA {
     return axios(options)
       .then((response) => {
         globalThis.secrets = [...new Set([...globalThis.secrets, ...Object.values(Cookie.ToJson(response.headers?.['set-cookie']))])];
-        const { userActiveArtifacts } = JSON.parse(`{${response.data.match(/artifactsData.*?=.*?{(.+?)};/m)?.[1] || ''}}`) || {};
-        if (userActiveArtifacts) {
-          Object.values(userActiveArtifacts).forEach((artifact: any) => {
-            this.additionalTwitchARP += parseFloat(artifact?.perkTextShort?.match(/Twitch quests by ([\d]+)/)?.[1] || '0');
-          });
+        const $ = load(response.data);
+        let result = false;
+        $('.artifact-card-chaotic').toArray().forEach((e) => {
+          result = true;
+          if ($(e).find('button[onClick]').length > 0) {
+            this.additionalTwitchARP += parseFloat($(e).find('a[data-description-perk]').attr('data-description-perk')
+              ?.match(/Twitch quests by ([\d]+)/)?.[1] || '0');
+          }
+        });
+        if (result) {
           ((response.config as myAxiosConfig)?.Logger || logger).log(chalk.green('OK'));
           return true;
         }
+        // const { userActiveArtifacts } = JSON.parse(`{${response.data.match(/artifactsData.*?=.*?{(.+?)};/m)?.[1] || ''}}`) || {};
+        // if (userActiveArtifacts) {
+        //   Object.values(userActiveArtifacts).forEach((artifact: any) => {
+        //     this.additionalTwitchARP += parseFloat(artifact?.perkTextShort?.match(/Twitch quests by ([\d]+)/)?.[1] || '0');
+        //   });
+        //   ((response.config as myAxiosConfig)?.Logger || logger).log(chalk.green('OK'));
+        //   return true;
+        // }
         ((response.config as myAxiosConfig)?.Logger || logger).log(chalk.red('Error(1)'));
         new Logger(response.data?.message || response);
         return false;

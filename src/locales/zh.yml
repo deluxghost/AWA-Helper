@@ -215,7 +215,7 @@ log: 日志
 ### managerServer ###
 managerServerNotConfig: managerServer未配置!
 managerServerSecretNotSet: managerServer的secret未设置！
-managerServerStart: managerServer启动成功！推送链接 %s
+managerServerStart: managerServer启动成功！访问链接 %s
 cookieUpdated: cookie更新成功，来源IP%s
 twitchCookieUpdated: Twitch Cookie更新成功，来源IP%s
 publicNetworkNotice: 如需公网访问，请将 127.0.0.1 更换为你的公网ip，并开放%s端口
